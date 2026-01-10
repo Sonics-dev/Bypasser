@@ -1,0 +1,54 @@
+import requests
+
+API_KEY = "58a549e8-6e14-4c73-9a18-be183aa5d419"
+SCRAPER_ID = "651efe3e-b795-427b-a14d-b32b24b927ee"
+BASE_URL = f"https://api.parse.bot/scraper/%7BSCRAPER_ID%7D"
+
+HEADERS = {
+    "Content-Type": "application/json",
+    "X-API-Key": API_KEY
+}
+
+Set session cookie
+cookie_value = "PUT_YOUR_COOKIE_HERE"
+
+set_cookie_res = requests.post(
+    f"{BASE_URL}/set_session_cookie",
+    json={"cookie_value": cookie_value},
+    headers=HEADERS
+)
+
+print("Set cookie:", set_cookie_res.json())
+
+Generate random password
+gen_pass_res = requests.post(
+    f"{BASE_URL}/generate_random_password",
+    json={},
+    headers=HEADERS
+)
+
+gen_pass_data = gen_pass_res.json()
+print("Generated password:", gen_pass_data)
+
+password = gen_pass_data.get("password")
+
+if not password:
+    raise Exception("Password not returned from API")
+
+Submit password
+submit_pass_res = requests.post(
+    f"{BASE_URL}/submit_password",
+    json={"password": password},
+    headers=HEADERS
+)
+
+print("Submit password:", submit_pass_res.json())
+
+Start bypass
+bypass_res = requests.post(
+    f"{BASE_URL}/start_bypass",
+    json={},
+    headers=HEADERS
+)
+
+print("Start bypass:", bypass_res.json())
