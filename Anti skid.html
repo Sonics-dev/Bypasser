@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Protected Page</title>
+
+<script>
+/* ================================
+   1. DOMAIN LOCK
+================================ */
+(function () {
+    const allowedDomain = "yoursite.com"; // PALITAN MO
+
+    if (location.hostname !== allowedDomain && location.hostname !== "localhost") {
+        document.documentElement.innerHTML = "";
+        alert("Unauthorized domain!");
+        throw new Error("Domain not allowed");
+    }
+})();
+
+/* ================================
+   2. ANTI RIGHT CLICK + SHORTCUTS
+================================ */
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+document.addEventListener("keydown", function (e) {
+    if (
+        e.keyCode === 123 || // F12
+        (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+        (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+        (e.ctrlKey && e.keyCode === 83) // Ctrl+S
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+/* ================================
+   3. DEVTOOLS DETECTION
+================================ */
+setInterval(function () {
+    const start = new Date().getTime();
+    debugger;
+    const end = new Date().getTime();
+
+    if (end - start > 100) {
+        document.body.innerHTML = "<h1 style='text-align:center;color:red;'>DEVTOOLS DETECTED</h1>";
+    }
+}, 1000);
+
+/* ================================
+   4. SOURCE OBFUSCATION (BASIC)
+================================ */
+(function (_0xabc) {
+    const _0xkey = "Protected";
+    if (_0xkey !== "Protected") {
+        while (true) {}
+    }
+})({});
+
+/* ================================
+   5. CONSOLE WARNING
+================================ */
+console.clear();
+console.log("%cSTOP!", "color:red;font-size:40px;font-weight:bold;");
+console.log("%cThis source is protected.", "color:white;font-size:16px;");
+console.log("%cUnauthorized copying is prohibited.", "color:yellow;font-size:14px;");
+</script>
+
+<style>
+/* Optional anti-select */
+body {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🔐 Protected Content</h1>
+<p>This page is secured with Anti-Skid Protection.</p>
+
+</body>
+</html>
